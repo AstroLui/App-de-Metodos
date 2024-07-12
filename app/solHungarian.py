@@ -25,9 +25,3 @@ def Aplicar_Metodo(matriz):
     
     return asignacionOptima, cost_total
 
-n = int(input("Ingrese un numero: "))
-matriz = Enter_MatrizCosto(n)
-asignacionOptima, costoTotal = Aplicar_Metodo(matriz)
-
-print(asignacionOptima)
-print(costoTotal)
