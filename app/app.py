@@ -1,5 +1,46 @@
 import customtkinter as ctk
 
+#<-- Variables Globales -->
+global modeForTransporte
+#<--- Funciones --->
+def buttonMatriz_comand():
+    for widget in frameEntryMatriz.winfo_children():
+        widget.destroy()    
+    n = int(entryRow.get())
+    m = int(entryCol.get())
+    for i in range(n):
+        for j in range(m):
+            entry=ctk.CTkEntry(frameEntryMatriz, width=30, placeholder_text=f"{i}{j}")
+            entry.grid(row=i, column=j, padx=5, pady=5)
+    for i in range(n):
+        entry=ctk.CTkEntry(frameEntryMatriz, width=30, placeholder_text=f"O{i}")
+        entry.grid(row=i, column=m+1, padx=5, pady=5)
+    for j in range(m):
+        entry=ctk.CTkEntry(frameEntryMatriz, width=30, placeholder_text=f"D{j}")
+        entry.grid(row=n+1, column=j, padx=5, pady=5)
+
+def segmented_button_callback(value):
+    modeForTransporte = "max" if(value == "Maximizar") else "min"
+
+def buttonSolver_comand():
+    matriz=[]
+    n = int(entryRow.get())
+    m = int(entryCol.get())
+    i = 0
+    j = 0
+    array=[]
+    for widget in frameEntryMatriz.winfo_children():
+        if(i < n):
+            if(j < m):
+                array.append(widget.get())
+                j+=1
+            else:
+                matriz.append(array)
+                array=[]
+                i+=1
+                array.append(widget.get())
+                j=1
+    print(matriz)
 #<--- Creacion de la App --->
 app = ctk.CTk()
 #<--- Configuracion de la App --->
@@ -17,9 +58,6 @@ tabTransporte = tabView.tab("Metodo de Transporte")
 tabView.set("Metodo de Transporte")
     #<-- TabView Main Fin -->
     #<-- Para el Metodo de Transporte -->
-global modeForTransporte
-def segmented_button_callback(value):
-    modeForTransporte = "max" if(value == "Maximizar") else "min"
 frameChoose = ctk.CTkFrame(tabTransporte)
 frameChoose.pack(padx=2, pady=2, fill="x")
 labelChoose = ctk.CTkLabel(frameChoose, text="Costo a", font=("Inter Tight", 15))
@@ -38,14 +76,20 @@ labelEntryCol.grid(row=1, column=0, padx=(15, 3), pady=3)
 entryCol = ctk.CTkEntry(frameEntry, width=50, border_width=0)
 entryCol.grid(row=1, column=1, padx=10, pady=2)
 
+buttonMatriz = ctk.CTkButton(tabTransporte, text="Formar Matriz",border_width=0, command=buttonMatriz_comand)
+buttonMatriz.pack(padx=10, pady=10, fill="x")
+
 labelEntryMatriz = ctk.CTkLabel(tabTransporte, text="Matriz de Costo", font=("Inter Tight", 16))
 labelEntryMatriz.pack( padx=2, pady=2, fill="x")
+frameEntryMatriz = ctk.CTkFrame(tabTransporte, )
+frameEntryMatriz.pack(padx=2, pady=2, fill="x")
 
+buttonSolver = ctk.CTkButton(tabTransporte, text="Resolver",border_width=0, command=buttonSolver_comand)
+buttonSolver.pack(padx=10, pady=10, fill="x")
 
+textBoxSolver = ctk.CTkTextbox(tabTransporte)
+textBoxSolver.pack(padx=20, pady=10, fill="both")
     #<-- Para el Metodo de Transporte Fin-->
 #<-- Correr App -->
 app.mainloop()
 
-#<--- Funciones --->
-def constMatriz():
-    return 
