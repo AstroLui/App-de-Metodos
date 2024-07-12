@@ -1,8 +1,6 @@
 import customtkinter as ctk
 from solTrasporte import Start
 from pulp import LpStatus, value, LpVariable
-#<-- Variables Globales -->
-global modeForTransporte
 #<--- Funciones --->
 def buttonMatriz_comand():
     for widget in frameEntryMatriz.winfo_children():
@@ -11,19 +9,22 @@ def buttonMatriz_comand():
     m = int(entryCol.get())
     for i in range(n):
         for j in range(m):
-            entry=ctk.CTkEntry(frameEntryMatriz, width=30, placeholder_text=f"{i}{j}")
+            entry=ctk.CTkEntry(frameEntryMatriz, width=30, placeholder_text=f"{i}{j}", border_width=0)
             entry.grid(row=i, column=j, padx=5, pady=5)
     for i in range(n):
-        entry=ctk.CTkEntry(frameEntryMatriz, width=30, placeholder_text=f"O{i}")
+        entry=ctk.CTkEntry(frameEntryMatriz, width=43, placeholder_text=f"O{i}", border_width=0)
         entry.grid(row=i, column=m+1, padx=5, pady=5)
     for j in range(m):
-        entry=ctk.CTkEntry(frameEntryMatriz, width=30, placeholder_text=f"D{j}")
+        entry=ctk.CTkEntry(frameEntryMatriz, width=43, placeholder_text=f"D{j}", border_width=0)
         entry.grid(row=n+1, column=j, padx=5, pady=5)
 
 def segmented_button_callback(value):
+    global modeForTransporte; 
     modeForTransporte = "max" if(value == "Maximizar") else "min"
+    print(modeForTransporte)
 
 def buttonSolver_comand():
+    textBoxSolver.insert("0.0", "<----------------------------> \n")
     matriz=[]
     n = int(entryRow.get())
     m = int(entryCol.get())
@@ -56,7 +57,7 @@ def buttonSolver_comand():
     print(matriz)
     print(ofertas)
     print(demandas)
-    status, variables, objetivo = Start(matriz, ofertas, demandas, n, m)
+    status, variables, objetivo = Start(matriz, ofertas, demandas, n, m, modeForTransporte)
     textstatus = LpStatus[status]
     costoTotal = value(objetivo)
     for v in variables:

@@ -18,8 +18,9 @@ def Enter_Demanda_Oferta(n, m):
         demanda.append(int(input(f"{j} Demanda: ")))
     return oferta, demanda
         
-def Start(matriz, oferta, demanda, n, m):
-    prob = pulp.LpProblem("Problema de Trasnporte", pulp.const.LpMinimize)
+def Start(matriz, oferta, demanda, n, m, modo):
+    mode = pulp.const.LpMinimize if(modo == "min") else pulp.const.LpMaximize
+    prob = pulp.LpProblem("Problema de Trasnporte", mode)
     variables = pulp.LpVariable.dicts("Rutas",[(i,j) for i in range(n) for j in range(m)], lowBound=0)
     prob += pulp.lpSum(variables[(i, j)] * matriz[i][j] for i in range(n) for j in range(m))
 
