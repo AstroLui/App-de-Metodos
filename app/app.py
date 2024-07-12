@@ -28,7 +28,10 @@ def buttonSolver_comand():
     m = int(entryCol.get())
     i = 0
     j = 0
+    k = 0
     array=[]
+    ofertas = []
+    demandas = []
     for widget in frameEntryMatriz.winfo_children():
         if(i < n):
             if(j < m):
@@ -40,7 +43,18 @@ def buttonSolver_comand():
                 i+=1
                 array.append(widget.get())
                 j=1
+                if(i == n):
+                    ofertas.append(widget.get())
+                    k+=1
+        else:
+            if(k < n):
+                ofertas.append(widget.get())
+                k +=1
+            else:
+                demandas.append(widget.get())
     print(matriz)
+    print(ofertas)
+    print(demandas)
 #<--- Creacion de la App --->
 app = ctk.CTk()
 #<--- Configuracion de la App --->
