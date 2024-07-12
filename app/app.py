@@ -1,6 +1,8 @@
 import customtkinter as ctk
 from solTrasporte import Start
 from pulp import LpStatus, value, LpVariable
+
+global Resultados; Resultados = 1
 #<--- Funciones --->
 def buttonMatriz_comand():
     for widget in frameEntryMatriz.winfo_children():
@@ -24,7 +26,7 @@ def segmented_button_callback(value):
     print(modeForTransporte)
 
 def buttonSolver_comand():
-    textBoxSolver.insert("0.0", "<----------------------------> \n")
+    textBoxSolver.insert("0.0", "<------------------------> \n")
     matriz=[]
     n = int(entryRow.get())
     m = int(entryCol.get())
