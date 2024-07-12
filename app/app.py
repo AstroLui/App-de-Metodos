@@ -1,5 +1,6 @@
 import customtkinter as ctk
-
+from solTrasporte import Start
+from pulp import LpStatus, value, LpVariable
 #<-- Variables Globales -->
 global modeForTransporte
 #<--- Funciones --->
@@ -35,26 +36,34 @@ def buttonSolver_comand():
     for widget in frameEntryMatriz.winfo_children():
         if(i < n):
             if(j < m):
-                array.append(widget.get())
+                array.append(int(widget.get()))
                 j+=1
             else:
                 matriz.append(array)
                 array=[]
                 i+=1
-                array.append(widget.get())
+                array.append(int(widget.get()))
                 j=1
                 if(i == n):
-                    ofertas.append(widget.get())
+                    ofertas.append(int(widget.get()))
                     k+=1
         else:
             if(k < n):
-                ofertas.append(widget.get())
+                ofertas.append(int(widget.get()))
                 k +=1
             else:
-                demandas.append(widget.get())
+                demandas.append(int(widget.get()))
     print(matriz)
     print(ofertas)
     print(demandas)
+    status, variables, objetivo = Start(matriz, ofertas, demandas, n, m)
+    textstatus = LpStatus[status]
+    costoTotal = value(objetivo)
+    for v in variables:
+        textBoxSolver.insert("0.0", str(v.name) + " : " + str(v.varValue) + "\n")
+    textBoxSolver.insert("0.0", "Costo Total: " + " " + str(costoTotal) + "\n")
+    textBoxSolver.insert("0.0", "Status: " + " " + str(textstatus) + "\n")
+
 #<--- Creacion de la App --->
 app = ctk.CTk()
 #<--- Configuracion de la App --->
