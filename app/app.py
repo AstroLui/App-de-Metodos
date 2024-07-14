@@ -26,16 +26,6 @@ def buttonMatriz_comand():
         entry.grid(row=n+1, column=j, padx=5, pady=5)
 
 
-# def buttonMatrizH_comand():
-#     for widget in frameEntryMatrizH.winfo_children():
-#         widget.destroy()
-#     n = int(entryN.get())
-#     for i in range(n):
-#         for j in range(n):
-#             entry = ctk.CTkEntry(frameEntryMatrizH, width=30, placeholder_text=f"{
-#                                  i}{j}", border_width=0)
-#             entry.grid(row=i, column=j, padx=5, pady=5)
-
 def buttonMatrizH_comand():
     for widget in frameEntryMatrizH.winfo_children():
         widget.destroy()
@@ -95,26 +85,6 @@ def buttonSolver_comand():
     textBoxSolver.insert("0.0", "Costo Total: " + " " + str(costoTotal) + "\n")
     textBoxSolver.insert("0.0", "Status: " + " " + str(textstatus) + "\n")
 
-
-# def buttonSolverH_comand():
-#     textBoxSolverH.insert("0.0", "<------------------------> \n")
-#     matriz = []
-#     n = int(entryN.get())
-
-#     widgets = frameEntryMatrizH.winfo_children()
-#     # Fill matrix
-#     for i in range(n):
-#         row = []
-#         for j in range(n):
-#             row.append(int(widgets[i * n + j].get()))
-#         matriz.append(row)
-
-#     asignaciones, costoTotal = Aplicar_Metodo(matriz)
-#     textBoxSolverH.insert("0.0", "Costo Total: " + str(costoTotal) + "\n")
-#     for idx, (i, j) in enumerate(asignaciones, start=1):
-#         value = matriz[i][j]
-#         textBoxSolverH.insert("0.0", f"Asignación {idx}: (Columna {
-#                               i}, Fila {j}) -> Valor: {value}\n")
 
 def buttonSolverH_comand():
     textBoxSolverH.delete("0.0", "end")
