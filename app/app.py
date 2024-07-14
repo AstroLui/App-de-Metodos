@@ -104,6 +104,14 @@ def buttonSolverH_comand():
     if array:  # To handle any remaining elements
         matriz.append(array)
 
+    # Adjust the matrix to be square
+    if n > m:  # Add columns filled with zeros
+        for row in matriz:
+            row.extend([0] * (n - m))
+    elif m > n:  # Add rows filled with zeros
+        for _ in range(m - n):
+            matriz.append([0] * m)
+
     # matriz = []
     # n = int(entryN.get())
 
