@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from solTrasporte import Start
-from solHungarian import Aplicar_Metodo
+from solHungarian import Aplicar_Metodo, Aplicar_Metodo_Pasos
 from pulp import LpStatus, value, LpVariable
 
 # <--- Funciones --->
@@ -25,6 +25,16 @@ def buttonMatriz_comand():
                              placeholder_text=f"D{j}", border_width=0)
         entry.grid(row=n+1, column=j, padx=5, pady=5)
 
+
+# def buttonMatrizH_comand():
+#     for widget in frameEntryMatrizH.winfo_children():
+#         widget.destroy()
+#     n = int(entryN.get())
+#     for i in range(n):
+#         for j in range(n):
+#             entry = ctk.CTkEntry(frameEntryMatrizH, width=30, placeholder_text=f"{
+#                                  i}{j}", border_width=0)
+#             entry.grid(row=i, column=j, padx=5, pady=5)
 
 def buttonMatrizH_comand():
     for widget in frameEntryMatrizH.winfo_children():
@@ -85,7 +95,28 @@ def buttonSolver_comand():
     textBoxSolver.insert("0.0", "Status: " + " " + str(textstatus) + "\n")
 
 
+# def buttonSolverH_comand():
+#     textBoxSolverH.insert("0.0", "<------------------------> \n")
+#     matriz = []
+#     n = int(entryN.get())
+
+#     widgets = frameEntryMatrizH.winfo_children()
+#     # Fill matrix
+#     for i in range(n):
+#         row = []
+#         for j in range(n):
+#             row.append(int(widgets[i * n + j].get()))
+#         matriz.append(row)
+
+#     asignaciones, costoTotal = Aplicar_Metodo(matriz)
+#     textBoxSolverH.insert("0.0", "Costo Total: " + str(costoTotal) + "\n")
+#     for idx, (i, j) in enumerate(asignaciones, start=1):
+#         value = matriz[i][j]
+#         textBoxSolverH.insert("0.0", f"Asignación {idx}: (Columna {
+#                               i}, Fila {j}) -> Valor: {value}\n")
+
 def buttonSolverH_comand():
+    textBoxSolverH.delete("0.0", "end")
     textBoxSolverH.insert("0.0", "<------------------------> \n")
     matriz = []
     n = int(entryN.get())
@@ -98,12 +129,24 @@ def buttonSolverH_comand():
             row.append(int(widgets[i * n + j].get()))
         matriz.append(row)
 
+    Aplicar_Metodo_Pasos(matriz, textBoxSolverH)
     asignaciones, costoTotal = Aplicar_Metodo(matriz)
-    textBoxSolverH.insert("0.0", "Costo Total: " + str(costoTotal) + "\n")
+
+    # Show each assignment and its value
+    value_list = []
+    total_sum = ""
     for idx, (i, j) in enumerate(asignaciones, start=1):
         value = matriz[i][j]
-        textBoxSolverH.insert("0.0", f"Asignación {idx}: (Columna {
-                              i}, Fila {j}) -> Valor: {value}\n")
+        value_list.append(value)
+        textBoxSolverH.insert("end", f"Asignación {
+                              idx}: (Columna {i}, Fila {j}) -> Valor: {value}\n")
+
+    textBoxSolverH.insert("end", f"Costo Total: {costoTotal}\n")
+    for i in range(len(value_list)-1):
+        total_sum += str(value_list[i]) + " + "
+    total_sum += str(value_list[-1]) + " = " + str(sum(value_list))
+    textBoxSolverH.insert(
+        "end", f"Suma de valores de asignaciones: {total_sum}\n")
 
 
 # <--- Funciones Fin --->
@@ -129,7 +172,7 @@ tabView.set("Metodo de Transporte")
 frameChoose = ctk.CTkFrame(tabTransporte)
 frameChoose.pack(padx=2, pady=2, fill="x")
 labelChoose = ctk.CTkLabel(
-    frameChoose, text="Costo a", font=("Inter Tight", 15))
+    frameChoose, text="Problema a", font=("Inter Tight", 15))
 labelChoose.grid(row=0, column=0, padx=(75, 0))
 chooseOption = ctk.CTkSegmentedButton(
     frameChoose, values=["Maximizar", "Minimizar"], command=segmented_button_callback)
@@ -144,7 +187,7 @@ labelEntryRow.grid(row=0, column=0, padx=(15, 3), pady=3)
 entryRow = ctk.CTkEntry(frameEntry, width=50, border_width=0)
 entryRow.grid(row=0, column=1, padx=10, pady=2)
 labelEntryCol = ctk.CTkLabel(
-    frameEntry, text="Ingrese el numero de Columna", font=("Inter Tight", 13))
+    frameEntry, text="Ingrese el numero de Columnas", font=("Inter Tight", 13))
 labelEntryCol.grid(row=1, column=0, padx=(15, 3), pady=3)
 entryCol = ctk.CTkEntry(frameEntry, width=50, border_width=0)
 entryCol.grid(row=1, column=1, padx=10, pady=2)
@@ -172,6 +215,16 @@ textBoxSolver.pack(padx=20, pady=10, fill="both")
 # <- TextBox donde se mostrar los resultados de la solucion Fin ->
 # <-- Para el Metodo de Transporte Fin-->
 # <-- Para el Metodo Hungaro  -->
+# <- Frame para la eleccion de Costo ->
+frameChooseH = ctk.CTkFrame(tabHungaro)
+frameChooseH.pack(padx=2, pady=2, fill="x")
+labelChooseH = ctk.CTkLabel(
+    frameChooseH, text="Problema a", font=("Inter Tight", 15))
+labelChooseH.grid(row=0, column=0, padx=(75, 0))
+chooseOptionH = ctk.CTkSegmentedButton(
+    frameChooseH, values=["Maximizar", "Minimizar"], command=segmented_button_callback)
+chooseOptionH.grid(row=0, column=1, padx=(5, 10), pady=5)
+# <- Frame para la eleccion de Costo Fin ->
 # <- Frame para el input del tamaño de la Matriz ->
 frameEntryH = ctk.CTkFrame(tabHungaro)
 frameEntryH.pack(padx=2, pady=2, fill="x")
