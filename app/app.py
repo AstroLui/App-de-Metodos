@@ -39,12 +39,13 @@ def buttonMatriz_comand():
 def buttonMatrizH_comand():
     for widget in frameEntryMatrizH.winfo_children():
         widget.destroy()
-    n = int(entryN.get())
+    n = int(entryRowH.get())
+    m = int(entryColH.get())
     for i in range(n):
-        for j in range(n):
-            entry = ctk.CTkEntry(frameEntryMatrizH, width=30, placeholder_text=f"{
-                                 i}{j}", border_width=0)
-            entry.grid(row=i, column=j, padx=5, pady=5)
+        for j in range(m):
+            entryH = ctk.CTkEntry(frameEntryMatrizH, width=30,
+                                  placeholder_text=f"{i}{j}", border_width=0)
+            entryH.grid(row=i, column=j, padx=5, pady=5)
 
 
 def segmented_button_callback(value):
@@ -118,16 +119,38 @@ def buttonSolver_comand():
 def buttonSolverH_comand():
     textBoxSolverH.delete("0.0", "end")
     textBoxSolverH.insert("0.0", "<------------------------> \n")
-    matriz = []
-    n = int(entryN.get())
 
-    widgets = frameEntryMatrizH.winfo_children()
-    # Fill matrix
-    for i in range(n):
-        row = []
-        for j in range(n):
-            row.append(int(widgets[i * n + j].get()))
-        matriz.append(row)
+    matriz = []
+    n = int(entryRowH.get())
+    m = int(entryColH.get())
+    i = 0
+    j = 0
+    array = []
+
+    for widget in frameEntryMatrizH.winfo_children():
+        if (i < n):
+            if (j < m):
+                array.append(int(widget.get()))
+                j += 1
+            else:
+                matriz.append(array)
+                array = []
+                i += 1
+                array.append(int(widget.get()))
+                j = 1
+        if i == n-1 and j == m:
+            matriz.append(array)
+
+    # matriz = []
+    # n = int(entryN.get())
+
+    # widgets = frameEntryMatrizH.winfo_children()
+    # # Fill matrix
+    # for i in range(n):
+    #     row = []
+    #     for j in range(n):
+    #         row.append(int(widgets[i * n + j].get()))
+    #     matriz.append(row)
 
     Aplicar_Metodo_Pasos(matriz, textBoxSolverH)
     asignaciones, costoTotal = Aplicar_Metodo(matriz)
@@ -147,6 +170,12 @@ def buttonSolverH_comand():
     total_sum += str(value_list[-1]) + " = " + str(sum(value_list))
     textBoxSolverH.insert(
         "end", f"Suma de valores de asignaciones: {total_sum}\n")
+
+
+def segmented_button_callbackH(value):
+    global modeForHungaro
+    modeForHungaro = "max" if (value == "Maximizar") else "min"
+    print(modeForHungaro)
 
 
 # <--- Funciones Fin --->
@@ -226,13 +255,25 @@ chooseOptionH = ctk.CTkSegmentedButton(
 chooseOptionH.grid(row=0, column=1, padx=(5, 10), pady=5)
 # <- Frame para la eleccion de Costo Fin ->
 # <- Frame para el input del tamaño de la Matriz ->
+# frameEntryH = ctk.CTkFrame(tabHungaro)
+# frameEntryH.pack(padx=2, pady=2, fill="x")
+# labelEntryN = ctk.CTkLabel(
+#     frameEntryH, text="Ingrese el tamaño de la matriz: ", font=("Inter Tight", 13))
+# labelEntryN.grid(padx=2, pady=2, row=0, column=0)
+# entryN = ctk.CTkEntry(frameEntryH, border_width=0, width=50)
+# entryN.grid(padx=2, pady=2, row=0, column=1)
 frameEntryH = ctk.CTkFrame(tabHungaro)
 frameEntryH.pack(padx=2, pady=2, fill="x")
-labelEntryN = ctk.CTkLabel(
-    frameEntryH, text="Ingrese el tamaño de la matriz: ", font=("Inter Tight", 13))
-labelEntryN.grid(padx=2, pady=2, row=0, column=0)
-entryN = ctk.CTkEntry(frameEntryH, border_width=0, width=50)
-entryN.grid(padx=2, pady=2, row=0, column=1)
+labelEntryRowH = ctk.CTkLabel(
+    frameEntryH, text="Ingrese el numero de Filas", font=("Inter Tight", 14))
+labelEntryRowH.grid(row=0, column=0, padx=(15, 3), pady=3)
+entryRowH = ctk.CTkEntry(frameEntryH, width=50, border_width=0)
+entryRowH.grid(row=0, column=1, padx=10, pady=2)
+labelEntryColH = ctk.CTkLabel(
+    frameEntryH, text="Ingrese el numero de Columnas", font=("Inter Tight", 13))
+labelEntryColH.grid(row=1, column=0, padx=(15, 3), pady=3)
+entryColH = ctk.CTkEntry(frameEntryH, width=50, border_width=0)
+entryColH.grid(row=1, column=1, padx=10, pady=2)
 # <- Frame para el input del tamaño de la Matriz Fin ->
 # <- Button que formara la matriz ->
 buttonMatrizH = ctk.CTkButton(tabHungaro, text="Forma Matriz", font=(
