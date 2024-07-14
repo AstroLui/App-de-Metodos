@@ -148,6 +148,7 @@ app = ctk.CTk()
 app.title("App")
 app.geometry("400x700")
 app._set_appearance_mode("light")
+
 # <--- Adicion de Widgets --->
 # <-- TabView Main -->
 tabView = ctk.CTkTabview(master=app)
@@ -159,9 +160,14 @@ tabTransporte = tabView.tab("Metodo de Transporte")
 tabHungaro = tabView.tab("Metodo Hungaro")
 tabView.set("Metodo de Transporte")
 # <-- TabView Main Fin -->
+
+# Adding scrollable frame for Metodo de Transporte
+scrollable_frame_transporte = ctk.CTkScrollableFrame(tabTransporte)
+scrollable_frame_transporte.pack(padx=10, pady=10, fill="both", expand=True)
+
 # <-- Para el Metodo de Transporte -->
 # <- Frame para la eleccion de Costo ->
-frameChoose = ctk.CTkFrame(tabTransporte)
+frameChoose = ctk.CTkFrame(scrollable_frame_transporte)
 frameChoose.pack(padx=2, pady=2, fill="x")
 labelChoose = ctk.CTkLabel(
     frameChoose, text="Problema a", font=("Inter Tight", 15))
@@ -171,7 +177,7 @@ chooseOption = ctk.CTkSegmentedButton(
 chooseOption.grid(row=0, column=1, padx=(5, 10), pady=5)
 # <- Frame para la eleccion de Costo Fin ->
 # <- Frame para la inputs de los numeros de filas y columnas ->
-frameEntry = ctk.CTkFrame(tabTransporte)
+frameEntry = ctk.CTkFrame(scrollable_frame_transporte)
 frameEntry.pack(padx=2, pady=2, fill="x")
 labelEntryRow = ctk.CTkLabel(
     frameEntry, text="Ingrese el numero de Filas", font=("Inter Tight", 14))
@@ -185,47 +191,45 @@ entryCol = ctk.CTkEntry(frameEntry, width=50, border_width=0)
 entryCol.grid(row=1, column=1, padx=10, pady=2)
 # <- Frame para la inputs de los numeros de filas y columnas Fin ->
 # <- Button para formar la Matriz ->
-buttonMatriz = ctk.CTkButton(tabTransporte, text="Formar Matriz", border_width=0, font=(
-    "Inter Tight", 14), command=buttonMatriz_comand)
+buttonMatriz = ctk.CTkButton(scrollable_frame_transporte, text="Formar Matriz",
+                             border_width=0, font=("Inter Tight", 14), command=buttonMatriz_comand)
 buttonMatriz.pack(padx=10, pady=10, fill="x")
 # <- Button para formar la Matriz Fin ->
 # <- Espacio donde se formara la Matriz ->
 labelEntryMatriz = ctk.CTkLabel(
-    tabTransporte, text="Matriz de Costo", font=("Inter Tight", 16))
+    scrollable_frame_transporte, text="Matriz de Costo", font=("Inter Tight", 16))
 labelEntryMatriz.pack(padx=2, pady=2, fill="x")
-frameEntryMatriz = ctk.CTkFrame(tabTransporte, )
+frameEntryMatriz = ctk.CTkFrame(scrollable_frame_transporte)
 frameEntryMatriz.pack(padx=2, pady=2, fill="x")
 # <- Espacio donde se formara la Matriz Fin ->
 # <- Button para generar la solucion ->
-buttonSolver = ctk.CTkButton(
-    tabTransporte, text="Resolver", border_width=0, command=buttonSolver_comand)
+buttonSolver = ctk.CTkButton(scrollable_frame_transporte,
+                             text="Resolver", border_width=0, command=buttonSolver_comand)
 buttonSolver.pack(padx=10, pady=10, fill="x")
 # <- Button para generar la solucion Fin ->
 # <- TextBox donde se mostrar los resultados de la solucion ->
-textBoxSolver = ctk.CTkTextbox(tabTransporte)
+textBoxSolver = ctk.CTkTextbox(scrollable_frame_transporte)
 textBoxSolver.pack(padx=20, pady=10, fill="both")
 # <- TextBox donde se mostrar los resultados de la solucion Fin ->
 # <-- Para el Metodo de Transporte Fin-->
+
+# Adding scrollable frame for Metodo Hungaro
+scrollable_frame_hungaro = ctk.CTkScrollableFrame(tabHungaro)
+scrollable_frame_hungaro.pack(padx=10, pady=10, fill="both", expand=True)
+
 # <-- Para el Metodo Hungaro  -->
 # <- Frame para la eleccion de Costo ->
-frameChooseH = ctk.CTkFrame(tabHungaro)
+frameChooseH = ctk.CTkFrame(scrollable_frame_hungaro)
 frameChooseH.pack(padx=2, pady=2, fill="x")
 labelChooseH = ctk.CTkLabel(
     frameChooseH, text="Problema a", font=("Inter Tight", 15))
 labelChooseH.grid(row=0, column=0, padx=(75, 0))
-chooseOptionH = ctk.CTkSegmentedButton(
-    frameChooseH, values=["Maximizar", "Minimizar"], command=segmented_button_callback)
+chooseOptionH = ctk.CTkSegmentedButton(frameChooseH, values=[
+                                       "Maximizar", "Minimizar"], command=segmented_button_callback)
 chooseOptionH.grid(row=0, column=1, padx=(5, 10), pady=5)
 # <- Frame para la eleccion de Costo Fin ->
 # <- Frame para el input del tamaño de la Matriz ->
-# frameEntryH = ctk.CTkFrame(tabHungaro)
-# frameEntryH.pack(padx=2, pady=2, fill="x")
-# labelEntryN = ctk.CTkLabel(
-#     frameEntryH, text="Ingrese el tamaño de la matriz: ", font=("Inter Tight", 13))
-# labelEntryN.grid(padx=2, pady=2, row=0, column=0)
-# entryN = ctk.CTkEntry(frameEntryH, border_width=0, width=50)
-# entryN.grid(padx=2, pady=2, row=0, column=1)
-frameEntryH = ctk.CTkFrame(tabHungaro)
+frameEntryH = ctk.CTkFrame(scrollable_frame_hungaro)
 frameEntryH.pack(padx=2, pady=2, fill="x")
 labelEntryRowH = ctk.CTkLabel(
     frameEntryH, text="Ingrese el numero de Filas", font=("Inter Tight", 14))
@@ -239,24 +243,24 @@ entryColH = ctk.CTkEntry(frameEntryH, width=50, border_width=0)
 entryColH.grid(row=1, column=1, padx=10, pady=2)
 # <- Frame para el input del tamaño de la Matriz Fin ->
 # <- Button que formara la matriz ->
-buttonMatrizH = ctk.CTkButton(tabHungaro, text="Forma Matriz", font=(
+buttonMatrizH = ctk.CTkButton(scrollable_frame_hungaro, text="Forma Matriz", font=(
     "Inter Tight", 14), command=buttonMatrizH_comand)
 buttonMatrizH.pack(padx=10, pady=10, fill="x")
 # <- Button que formara la matriz Fin ->
 # <- Espacio para la formacion de la Matriz ->
 labelEntryMatrizH = ctk.CTkLabel(
-    tabHungaro, text="Matriz de Costo", font=("Inter Tight", 16))
+    scrollable_frame_hungaro, text="Matriz de Costo", font=("Inter Tight", 16))
 labelEntryMatrizH.pack(padx=5, pady=5, fill="x")
-frameEntryMatrizH = ctk.CTkFrame(tabHungaro)
+frameEntryMatrizH = ctk.CTkFrame(scrollable_frame_hungaro)
 frameEntryMatrizH.pack(padx=2, pady=2, fill="x")
 # <- Espacio para la formacion de la Matriz Fin ->
 # <- Button para genera la solucion ->
-buttonSolverH = ctk.CTkButton(tabHungaro, text="Resolver", font=(
+buttonSolverH = ctk.CTkButton(scrollable_frame_hungaro, text="Resolver", font=(
     "Inter Tight", 14), command=buttonSolverH_comand)
 buttonSolverH.pack(padx=10, pady=10, fill="x")
 # <- Button para genera la solucion Fin ->
 # <- TextBox para mostrar los resultados ->
-textBoxSolverH = ctk.CTkTextbox(tabHungaro)
+textBoxSolverH = ctk.CTkTextbox(scrollable_frame_hungaro)
 textBoxSolverH.pack(padx=20, pady=20, fill="x")
 # <- TextBox para mostrar los resultados Fin ->
 # <-- Para el Metodo Hungaro Fin -->
