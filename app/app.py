@@ -112,17 +112,6 @@ def buttonSolverH_comand():
         for _ in range(m - n):
             matriz.append([0] * m)
 
-    # matriz = []
-    # n = int(entryN.get())
-
-    # widgets = frameEntryMatrizH.winfo_children()
-    # # Fill matrix
-    # for i in range(n):
-    #     row = []
-    #     for j in range(n):
-    #         row.append(int(widgets[i * n + j].get()))
-    #     matriz.append(row)
-
     Aplicar_Metodo_Pasos(matriz, modeForHungaro, textBoxSolverH)
     asignaciones, costoTotal = Aplicar_Metodo(matriz, modeForHungaro)
 
