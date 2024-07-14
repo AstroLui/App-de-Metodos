@@ -179,7 +179,7 @@ frameChoose = ctk.CTkFrame(scrollable_frame_transporte)
 frameChoose.pack(padx=2, pady=2, fill="x")
 labelChoose = ctk.CTkLabel(
     frameChoose, text="Problema a", font=("Inter Tight", 15))
-labelChoose.grid(row=0, column=0, padx=(75, 0))
+labelChoose.grid(row=0, column=0, padx=(30, 0))
 chooseOption = ctk.CTkSegmentedButton(
     frameChoose, values=["Maximizar", "Minimizar"], command=segmented_button_callback)
 chooseOption.grid(row=0, column=1, padx=(5, 10), pady=5)
@@ -231,7 +231,7 @@ frameChooseH = ctk.CTkFrame(scrollable_frame_hungaro)
 frameChooseH.pack(padx=2, pady=2, fill="x")
 labelChooseH = ctk.CTkLabel(
     frameChooseH, text="Problema a", font=("Inter Tight", 15))
-labelChooseH.grid(row=0, column=0, padx=(75, 0))
+labelChooseH.grid(row=0, column=0, padx=(30, 0))
 chooseOptionH = ctk.CTkSegmentedButton(frameChooseH, values=[
                                        "Maximizar", "Minimizar"], command=segmented_button_callback)
 chooseOptionH.grid(row=0, column=1, padx=(5, 10), pady=5)
