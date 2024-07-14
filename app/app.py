@@ -123,23 +123,16 @@ def buttonSolverH_comand():
     matriz = []
     n = int(entryRowH.get())
     m = int(entryColH.get())
-    i = 0
-    j = 0
     array = []
 
-    for widget in frameEntryMatrizH.winfo_children():
-        if (i < n):
-            if (j < m):
-                array.append(int(widget.get()))
-                j += 1
-            else:
-                matriz.append(array)
-                array = []
-                i += 1
-                array.append(int(widget.get()))
-                j = 1
-        if i == n-1 and j == m:
+    for index, widget in enumerate(frameEntryMatrizH.winfo_children()):
+        array.append(int(widget.get()))
+        if (index + 1) % m == 0:
             matriz.append(array)
+            array = []
+
+    if array:  # To handle any remaining elements
+        matriz.append(array)
 
     # matriz = []
     # n = int(entryN.get())
