@@ -13,15 +13,15 @@ def buttonMatriz_comand():
     m = int(entryCol.get())
     for i in range(n):
         for j in range(m):
-            entry = ctk.CTkEntry(frameEntryMatriz, width=30,
+            entry = ctk.CTkEntry(frameEntryMatriz, width=60,
                                  placeholder_text=f"{i}{j}", border_width=0)
             entry.grid(row=i, column=j, padx=5, pady=5)
     for i in range(n):
-        entry = ctk.CTkEntry(frameEntryMatriz, width=43,
+        entry = ctk.CTkEntry(frameEntryMatriz, width=73,
                              placeholder_text=f"O{i}", border_width=0)
         entry.grid(row=i, column=m+1, padx=5, pady=5)
     for j in range(m):
-        entry = ctk.CTkEntry(frameEntryMatriz, width=43,
+        entry = ctk.CTkEntry(frameEntryMatriz, width=73,
                              placeholder_text=f"D{j}", border_width=0)
         entry.grid(row=n+1, column=j, padx=5, pady=5)
 
@@ -43,7 +43,7 @@ def buttonMatrizH_comand():
     m = int(entryColH.get())
     for i in range(n):
         for j in range(m):
-            entryH = ctk.CTkEntry(frameEntryMatrizH, width=30,
+            entryH = ctk.CTkEntry(frameEntryMatrizH, width=60,
                                   placeholder_text=f"{i}{j}", border_width=0)
             entryH.grid(row=i, column=j, padx=5, pady=5)
 
