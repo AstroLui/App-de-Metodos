@@ -123,8 +123,8 @@ def buttonSolverH_comand():
     #         row.append(int(widgets[i * n + j].get()))
     #     matriz.append(row)
 
-    Aplicar_Metodo_Pasos(matriz, textBoxSolverH)
-    asignaciones, costoTotal = Aplicar_Metodo(matriz)
+    Aplicar_Metodo_Pasos(matriz, modeForHungaro, textBoxSolverH)
+    asignaciones, costoTotal = Aplicar_Metodo(matriz, modeForHungaro)
 
     # Show each assignment and its value
     value_list = []
@@ -233,7 +233,7 @@ labelChooseH = ctk.CTkLabel(
     frameChooseH, text="Problema a", font=("Inter Tight", 15))
 labelChooseH.grid(row=0, column=0, padx=(30, 0))
 chooseOptionH = ctk.CTkSegmentedButton(frameChooseH, values=[
-                                       "Maximizar", "Minimizar"], command=segmented_button_callback)
+                                       "Maximizar", "Minimizar"], command=segmented_button_callbackH)
 chooseOptionH.grid(row=0, column=1, padx=(5, 10), pady=5)
 # <- Frame para la eleccion de Costo Fin ->
 # <- Frame para el input del tamaño de la Matriz ->
