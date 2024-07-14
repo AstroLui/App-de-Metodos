@@ -89,37 +89,20 @@ def buttonSolverH_comand():
     textBoxSolverH.insert("0.0", "<------------------------> \n")
     matriz = []
     n = int(entryN.get())
-    i = 0
-    j = 0
-    k = 0
     array = []
-    ofertas = []
-    demandas = []
-    for widget in frameEntryMatrizH.winfo_children():
-        if (i < n):
-            if (j < n):
-                array.append(int(widget.get()))
-                j += 1
-            else:
-                matriz.append(array)
-                array = []
-                i += 1
-                array.append(int(widget.get()))
-                j = 1
-                if (i == n):
-                    ofertas.append(int(widget.get()))
-                    k += 1
-        else:
-            if (k < n):
-                ofertas.append(int(widget.get()))
-                k += 1
-            else:
-                demandas.append(int(widget.get()))
+
+    widgets = frameEntryMatrizH.winfo_children()
+    # Fill matrix
+    for i in range(n):
+        row = []
+        for j in range(n):
+            row.append(int(widgets[i * n + j].get()))
+        matriz.append(row)
+
     asignaciones, costoTotal = Aplicar_Metodo(matriz)
-    textBoxSolverH.insert("0.0", "Costo Total: " +
-                          " " + str(costoTotal) + "\n")
+    textBoxSolverH.insert("0.0", "Costo Total: " + str(costoTotal) + "\n")
     for asig in asignaciones:
-        textBoxSolverH.insert("0.0", "Asignacion: " + " " + str(asig) + "\n")
+        textBoxSolverH.insert("0.0", "Asignacion: " + str(asig) + "\n")
 
 
 # <--- Funciones Fin --->
